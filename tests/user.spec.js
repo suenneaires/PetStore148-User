@@ -41,3 +41,4 @@ test.describe.serial('Testes Positivos', async () => {
     }) // Fecha o GET - Consultar
 
 }); // Fecha o grupo de testes
+
