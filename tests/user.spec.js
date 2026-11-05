@@ -39,7 +39,7 @@ test.describe.serial('Testes Positivos', async () => {
     }) // Fecha o GET - Consultar
 
 
-        // Alteração do campo EMAIL - PUT
+    // Alteração do campo EMAIL - PUT
     test('Alterar Usuário', async ({ request }) => {
         // Copiar os dados e alterar apenas o email
         const userAtualizado = {
@@ -71,6 +71,25 @@ test.describe.serial('Testes Positivos', async () => {
         expect(usuarioConsultado.email).toBe(userAtualizado.email)
 
     }) // Fecha o PUT - Alterar
+
+    // DELETE
+    test('Excluir Usuário', async ({ request }) => {
+        // Excluir o usuário pelo username
+        const response = await request.delete(`user/${user.username}`)
+
+        // Verificar se a exclusão retornou status 200
+        expect(response.status()).toBe(200)
+
+        // Verificar se message corresponde ao username excluído
+        expect((await response.json()).message).toBe(user.username)
+
+        // Consultar o usuário após a exclusão
+        const consulta = await request.get(`user/${user.username}`)
+
+        // Verificar se o usuário não foi encontrado
+        expect(consulta.status()).toBe(404)
+
+    }) // Fecha o DELETE - Excluir
 
 }); // Fecha o grupo de testes
 
